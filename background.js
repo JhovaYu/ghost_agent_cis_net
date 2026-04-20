@@ -100,25 +100,30 @@ chrome.commands.onCommand.addListener((command) => {
 
 // Listener para recibir la pregunta parseada
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "search_question") {
-    const questionText = request.question;
-    let bestMatch = null;
-    let highestSim = 0;
+    if (request.action === "search_question") {
+        if (!request.question) {
+            console.log("Ghost Agent: Petición vacía ignorada.");
+            return sendResponse({ action: "highlight_answers", answers: [] });
+        }
+        
+        const questionText = request.question;
+        let bestMatch = null;
+        let highestSim = 0;
 
-    for (const item of db) {
-      const sim = getSimilarity(item.q, questionText);
-      if (sim > highestSim) {
-        highestSim = sim;
-        bestMatch = item;
-      }
-    }
+        for (const item of db) {
+            const sim = getSimilarity(item.q, questionText);
+            if (sim > highestSim) {
+                highestSim = sim;
+                bestMatch = item;
+            }
+        }
 
-    if (bestMatch && highestSim >= 0.85) {
-      console.log("Ghost Agent: Match Encontrado!", (highestSim * 100).toFixed(2) + "%");
-      sendResponse({ action: "highlight_answers", answers: bestMatch.a });
-    } else {
-      console.log("Ghost Agent: No hubo match confiable. Máxima similitud:", (highestSim * 100).toFixed(2) + "%");
-      sendResponse({ action: "highlight_answers", answers: [] });
+        if (bestMatch && highestSim >= 0.85) {
+            console.log("Ghost Agent: Match Encontrado!", (highestSim * 100).toFixed(2) + "%");
+            sendResponse({ action: "highlight_answers", answers: bestMatch.a });
+        } else {
+            console.log("Ghost Agent: No hubo match confiable. Máxima similitud:", (highestSim * 100).toFixed(2) + "%");
+            sendResponse({ action: "highlight_answers", answers: [] });
+        }
     }
-  }
 });

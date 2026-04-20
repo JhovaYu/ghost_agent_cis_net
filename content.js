@@ -1,116 +1,82 @@
+/**
+ * GHOST AGENT - CONTENT SCRIPT V7 (Shield Breaker)
+ */
+
 if (typeof window.ghostAgentInjected === 'undefined') {
   window.ghostAgentInjected = true;
-  console.log("GHOST INJECTOR: Cargado programáticamente en ->", window.location.href);
 
-  // Limpia la "basura" del DOM para Screen Readers robusta
+  // 1. ROMPER PROTECCIÓN DE CISCO (Hacer todo seleccionable)
+  const style = document.createElement('style');
+  style.innerHTML = `
+        * {
+            -webkit-user-select: text !important;
+            -moz-user-select: text !important;
+            -ms-user-select: text !important;
+            user-select: text !important;
+        }
+    `;
+  document.head.appendChild(style);
+  console.log("GHOST INJECTOR: 🛡️ Escudo de selección roto.");
+
   function cleanNodeText(node) {
-    let text = "";
-    for (let child of node.childNodes) {
-      if (child.nodeType === Node.TEXT_NODE) {
-        text += child.textContent;
-      } else if (child.nodeType === Node.ELEMENT_NODE) {
-        // Ignorar basura inyectada
-        if (!child.classList.contains('screenReader-position-text') && !child.classList.contains('sr-only')) {
-          text += cleanNodeText(child);
-        }
-      }
-    }
-    return text;
+    if (!node) return "";
+    let clone = node.cloneNode(true);
+    let spam = clone.querySelectorAll('.screenReader-position-text, .sr-only, [aria-hidden="true"]');
+    spam.forEach(el => el.remove());
+    return clone.innerText.replace(/\s+/g, ' ').trim();
   }
 
-  function normalizeText(text) {
-    if (!text) return "";
-    return text.toLowerCase().replace(/\s+/g, ' ').trim();
-  }
+  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.action !== "trigger_extraction") return;
 
-  // Motor Inferencia de la pregunta
-  // 2. Extracción de Datos Multicapa (Heurística Definitiva APEX)
-  function extractExamData() {
-    let questionText = null;
-    let optionNodes = [];
+    console.log("GHOST INJECTOR: 📡 Escaneando...");
 
-    // TACTICA 1: Búsqueda agresiva de la pregunta
-    // Obtenemos todos los elementos de bloque que podrían contener texto
-    let possibleQuestions = document.querySelectorAll('h1, h2, h3, h4, p, div');
+    // Intentar Sniper Mode primero
+    let questionText = window.getSelection().toString().trim();
 
-    for (let el of possibleQuestions) {
-      let text = el.innerText.trim();
-      // Filtramos textos vacíos o muy cortos
-      if (text.length < 20) continue;
-
-      // El filtro Anti-Cookies
-      let lower = text.toLowerCase();
-      if (lower.includes('cookie') || lower.includes('privacidad') || lower.includes('almacene o extraiga')) {
-        continue;
-      }
-
-      // ¿Parece una pregunta? (Termina en '?', o tiene palabras clave de Cisco)
-      if (text.endsWith('?') || text.endsWith('.)') || lower.includes('seleccionar todas') || lower.includes('elija dos') || lower.includes('qué') || lower.includes('cuál')) {
-        // Evitamos capturar el contenedor gigante que tiene toda la página
-        if (el.children.length > 2) continue;
-
-        questionText = text;
-        break; // ¡Encontramos la pregunta!
+    // Si no hay selección, intentamos capturar por fuerza bruta el texto central
+    if (!questionText) {
+      // Buscamos el div que suele contener la pregunta en el visualizador de autoría
+      let mainContent = document.querySelector('.main-content, #main-wrapper, .assessment-container, .mcq__body-inner');
+      if (mainContent) {
+        // Sacamos el primer párrafo o h3 que no sea basura
+        let p = mainContent.querySelector('p, h3, h2');
+        if (p) questionText = p.innerText.trim();
       }
     }
 
-    // TACTICA 2: Extracción de opciones
-    if (questionText) {
-      // Cisco suele usar <label> para los checkboxes/radios, o <li> en listas.
-      let possibleOptions = document.querySelectorAll('label, .mcq__item-label, li');
-
-      for (let el of possibleOptions) {
-        let text = el.innerText.trim();
-        // Ignoramos opciones vacías o que sean la misma pregunta
-        if (text.length > 0 && text !== questionText) {
-          optionNodes.push(el);
-        }
-      }
+    if (!questionText || questionText.length < 5) {
+      console.log("GHOST INJECTOR: ❌ No se pudo extraer texto. Intenta seleccionar la pregunta ahora que es posible.");
+      return;
     }
 
-    return { questionText, optionNodes };
-  }
+    console.log("GHOST INJECTOR: 🎯 Procesando:", questionText.substring(0, 50));
 
-  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    console.log("GHOST INJECTOR: Mensaje recibido en frame ->", window.location.href);
-    if (request.action === "trigger_extraction") {
+    let optionNodes = Array.from(document.querySelectorAll('label, .mcq__item-label, li, [role="listitem"]'));
 
-      // Extractor Omni-Selector
-      const qText = extractExamData();
+    chrome.runtime.sendMessage({
+      action: "search_question",
+      question: questionText
+    }, (response) => {
+      if (response && response.answers && response.answers.length > 0) {
+        console.log("GHOST INJECTOR: 🔥 Match!");
 
-      if (!qText || qText.length < 15) {
-        console.log("GHOST INJECTOR: Abortado. No hay pregunta aquí.");
-        return;
-      }
+        optionNodes.forEach(node => {
+          let cleanText = cleanNodeText(node).toLowerCase();
+          let isCorrect = response.answers.some(ans => {
+            let aLower = ans.toLowerCase().trim();
+            return cleanText.includes(aLower) || aLower.includes(cleanText);
+          });
 
-      console.log("PREGUNTA CAZADA:", qText);
-
-      // Comunicarse con el Background Script omnisciencia
-      chrome.runtime.sendMessage({ action: "search_question", question: qText }, (response) => {
-        if (response && response.action === "highlight_answers" && response.answers && response.answers.length > 0) {
-          highlightCorrectOptions(response.answers);
-        }
-      });
-    }
-  });
-
-  function highlightCorrectOptions(correctAnswers) {
-    // Extraer las opciones del DOM flexibilizado
-    const optionLabels = document.querySelectorAll('label, li, .mcq__item-label, .mcq__option');
-    if (!optionLabels || optionLabels.length === 0) return;
-
-    const normalizedAnswers = correctAnswers.map(normalizeText);
-
-    optionLabels.forEach(label => {
-      const labelText = normalizeText(cleanNodeText(label));
-
-      // Evaluar si alguna respuesta encaja en el texto de esta opción
-      for (const ans of normalizedAnswers) {
-        if (labelText.includes(ans) || ans.includes(labelText)) {
-          label.classList.add('ghost-highlight');
-          break;
-        }
+          if (isCorrect) {
+            node.style.setProperty("background-color", "rgba(46, 204, 113, 0.3)", "important");
+            node.style.setProperty("border", "2px solid #2ecc71", "important");
+          }
+        });
+      } else {
+        console.log("GHOST INJECTOR: 🧠 Sin match en DB.");
       }
     });
-  }
+    return true;
+  });
 }
