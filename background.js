@@ -67,10 +67,19 @@ function getSimilarity(s1, s2) {
 // Listener para atajos de teclado
 chrome.commands.onCommand.addListener((command) => {
   if (command === "search_database") {
-    // Mandar mensaje a la tab activa para extraer la pregunta
+    // Mandar mensaje iterativo a TODOS los iframes de la tab activa
     chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
       if (tabs[0]) {
-        chrome.tabs.sendMessage(tabs[0].id, {action: "trigger_extraction"});
+        chrome.webNavigation.getAllFrames({tabId: tabs[0].id}, (frames) => {
+          if (frames && frames.length > 0) {
+            frames.forEach(frame => {
+              chrome.tabs.sendMessage(tabs[0].id, {action: "trigger_extraction"}, {frameId: frame.frameId}).catch(() => {});
+            });
+          } else {
+            // Fallback
+            chrome.tabs.sendMessage(tabs[0].id, {action: "trigger_extraction"}).catch(() => {});
+          }
+        });
       }
     });
   }

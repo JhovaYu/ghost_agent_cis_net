@@ -1042,5 +1042,41 @@
         "a": [
             "Habilita portfast en una interfaz de conmutador específica."
         ]
+    },
+    {
+        "q": "¿Cuál es el modo de violación de puerto predeterminado cuando se habilita la seguridad de puerto en un switch Cisco?",
+        "a": [
+            "shutdown"
+        ]
+    },
+    {
+        "q": "Un administrador de red está configurando la seguridad de puerto en un switch Cisco. ¿Qué comando se usa para configurar el número máximo de direcciones MAC que se pueden aprender en un puerto?",
+        "a": [
+            "switchport port-security maximum"
+        ]
+    },
+    {
+        "q": "¿Qué característica de seguridad mitiga los ataques de suplantación de identidad (spoofing) ARP?",
+        "a": [
+            "Dynamic ARP Inspection (DAI)"
+        ]
+    },
+    {
+        "q": "¿Qué comando se utiliza para habilitar globalmente DHCP Snooping en un switch Cisco?",
+        "a": [
+            "ip dhcp snooping"
+        ]
+    },
+    {
+        "q": "¿Qué comando se usa para ver la tabla de enlace de DHCP snooping en un switch Cisco?",
+        "a": [
+            "show ip dhcp snooping binding"
+        ]
+    },
+    {
+        "q": " y la entrenas para clasificar dos tipos de objetos, un lápiz y un borrador. Luego lo pruebas con tu cara y notas que clasifica tu cara como un borrador (60% borrador, 40% lápiz). ¿Cuáles son las posibles razones para esto? Seleccionar todas las que correspondan (Elija dos.)",
+        "a": [
+            "Había algo de ruido de fondo (un perro ladrando) cuando estabas tomando fotos del borrador, y también cuando estabas probando el modelo con tu cara."
+        ]
     }
 ]

@@ -5,7 +5,8 @@
   "description": "Ghost Agent for Cisco (Offline)",
   "permissions": [
     "activeTab",
-    "scripting"
+    "scripting",
+    "webNavigation"
   ],
   "background": {
     "service_worker": "background.js"
@@ -15,6 +16,7 @@
       "matches": [
         "<all_urls>"
       ],
+      "all_frames": true,
       "js": [
         "content.js"
       ],

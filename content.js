@@ -21,21 +21,18 @@ function normalizeText(text) {
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "trigger_extraction") {
-    
+
     // Extraer pregunta
     const qNode = document.querySelector('.mcq__body-inner p') || document.querySelector('.mcq__body-inner');
-    if (!qNode) {
-      console.log("Ghost Agent: No se detectó pregunta en el DOM.");
-      return;
-    }
-    
+    if (!qNode) return; // Silencioso y rápido si no es el IFrame correcto
+
     const qText = cleanNodeText(qNode).trim();
-    
+
     // Comunicarse con el Background Script
-    chrome.runtime.sendMessage({action: "search_question", question: qText}, (response) => {
-       if (response && response.action === "highlight_answers" && response.answers && response.answers.length > 0) {
-         highlightCorrectOptions(response.answers);
-       }
+    chrome.runtime.sendMessage({ action: "search_question", question: qText }, (response) => {
+      if (response && response.action === "highlight_answers" && response.answers && response.answers.length > 0) {
+        highlightCorrectOptions(response.answers);
+      }
     });
   }
 });
@@ -48,14 +45,14 @@ function highlightCorrectOptions(correctAnswers) {
   const normalizedAnswers = correctAnswers.map(normalizeText);
 
   optionLabels.forEach(label => {
-     const labelText = normalizeText(cleanNodeText(label));
-     
-     // Evaluar si alguna respuesta encaja en el texto de esta opción
-     for (const ans of normalizedAnswers) {
-        if (labelText.includes(ans) || ans.includes(labelText)) {
-           label.classList.add('ghost-highlight');
-           break;
-        }
-     }
+    const labelText = normalizeText(cleanNodeText(label));
+
+    // Evaluar si alguna respuesta encaja en el texto de esta opción
+    for (const ans of normalizedAnswers) {
+      if (labelText.includes(ans) || ans.includes(labelText)) {
+        label.classList.add('ghost-highlight');
+        break;
+      }
+    }
   });
 }
