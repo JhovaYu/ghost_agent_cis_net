@@ -23,8 +23,8 @@ function normalizeText(text) {
 
 // Algoritmo de distancia de Levenshtein
 function levenshteinDistance(a, b) {
-  if (a.length === 0) return b.length; 
-  if (b.length === 0) return a.length; 
+  if (a.length === 0) return b.length;
+  if (b.length === 0) return a.length;
 
   let matrix = [];
 
@@ -58,15 +58,15 @@ function getSimilarity(s1, s2) {
   const norm2 = normalizeText(s2);
   let longer = norm1;
   let shorter = norm2;
-  
+
   if (norm1.length < norm2.length) {
     longer = norm2;
     shorter = norm1;
   }
-  
+
   const longerLength = longer.length;
   if (longerLength === 0) return 1.0;
-  
+
   return (longerLength - levenshteinDistance(longer, shorter)) / parseFloat(longerLength);
 }
 
@@ -75,14 +75,14 @@ chrome.commands.onCommand.addListener((command) => {
   if (command === 'toggle_overlay') {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, { action: 'toggle_overlay' }).catch(() => {});
+        chrome.tabs.sendMessage(tabs[0].id, { action: 'toggle_overlay' }).catch(() => { });
       }
     });
   }
   if (command === 'toggle_config') {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (tabs[0]) {
-        chrome.tabs.sendMessage(tabs[0].id, { action: 'toggle_config' }).catch(() => {});
+        chrome.tabs.sendMessage(tabs[0].id, { action: 'toggle_config' }).catch(() => { });
       }
     });
   }
@@ -98,7 +98,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     // la similitud global para evitar falsos positivos por substring corto
     const scored = db.map(item => {
       const normQ = normalizeText(item.q);
-      const containsBonus = normQ.includes(query) ? 0.3 : 0;
+      const containsBonus = normQ.includes(query) ? 0.1 : 0;
       const similarity = getSimilarity(item.q, request.query);
       // La similitud sola puede fallar en queries cortos; el bonus
       // de contains eleva entradas donde el query aparece en q,
@@ -114,8 +114,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     // Umbral: solo resultados con similitud real >= 0.25 Y score >= 0.5
     // Esto filtra entradas que solo matchean por substring corto accidental
     const results = scored
-      .filter(s => s.similarity >= 0.25 && s.score >= 0.5)
-      .slice(0, 5) // máximo 5 resultados
+      .filter(s => s.similarity >= 0.45 && s.score >= 0.55)
+      .slice(0, 3) // máximo 5 resultados
       .map(s => s.item);
 
     sendResponse({ results });

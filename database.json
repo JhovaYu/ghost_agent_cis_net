@@ -6,12 +6,6 @@
         ]
     },
     {
-        "q": "Consulte la ilustración. ¿Qué hará el router R1 con un paquete que tiene una dirección IPv6 de destino 2001:db8:cafe:5::1?",
-        "a": [
-            "Reenviará el paquete por Serial0/0/0."
-        ]
-    },
-    {
         "q": "Seleccione los tres modos de establecimiento de canales PAgP. (Escoja tres opciones).",
         "a": [
             "auto",
@@ -26,18 +20,6 @@
         ]
     },
     {
-        "q": "Consulte la ilustración. El administrador de red configura ambos switches como se muestra. Sin embargo, el host C no puede hacer ping al host D y el host E no puede hacer ping al host F. ¿Qué debe hacer el administrador para habilitar esta comunicación?",
-        "a": [
-            "Configurar cualquier puerto de enlace troncal en el modo dinámico deseado."
-        ]
-    },
-    {
-        "q": "Consulte la ilustración. Según la configuración y el resultado que se muestran, ¿por qué falta la VLAN 99?",
-        "a": [
-            "porque la VLAN 99 aún no se ha creado"
-        ]
-    },
-    {
         "q": "¿Cuáles son los tres pares de modos de enlace troncal que establecen un enlace troncal funcional entre dos switches Cisco? (Elija tres).",
         "a": [
             "Dinámico deseado y enlace troncal",
@@ -49,25 +31,6 @@
         "q": "Se ha configurado una ruta estática en un router. Sin embargo, la red de destino ya no existe. ¿Qué debe hacer un administrador para eliminar la ruta estática de la tabla de enrutamiento?",
         "a": [
             "Elimine la ruta usando el comando no ip route ."
-        ]
-    },
-    {
-        "q": "Consulte la ilustración. Un administrador de redes agregó una nueva subred a la red y necesita que los hosts de dicha subred reciban direcciones IPv4 del servidor DHCPv4.\n¿Qué dos comandos permiten que los hosts de la nueva subred reciban las direcciones del servidor DHCP4? (Elija dos opciones.)",
-        "a": [
-            "R1(config-if)# ip helper-address 10.2.0.250",
-            "R1(config)# interface G0/0"
-        ]
-    },
-    {
-        "q": "Consulte la exhibición. Se configuró el R1 tal como se muestra. Sin embargo, la PC1 no puede recibir ninguna dirección IPv4. ¿Cuál es el problema?",
-        "a": [
-            "El comando ip helper-address se aplicó en una interfaz incorrecta."
-        ]
-    },
-    {
-        "q": "Consulte la ilustración. ¿Qué se puede concluir acerca de la configuración mostrada en R1?",
-        "a": [
-            "R1 está configurado como un agente de retransmisión DHCPv4."
         ]
     },
     {
@@ -110,30 +73,6 @@
         ]
     },
     {
-        "q": "Un nuevo switch de capa 3 está conectado a un router y se está configurando para el enrutamiento InterVLAN. ¿Cuáles son tres de los cinco pasos necesarios para la configuración? (Escoja tres opciones).",
-        "a": [
-            "habilitar el routing IP",
-            "ingresando «sin switchport» en el puerto conectado al router",
-            "asignando puertos a VLANs"
-        ]
-    },
-    {
-        "q": "Un nuevo switch de capa 3 está conectado a un router y se está configurando para el enrutamiento InterVLAN. ¿Cuáles son tres de los cinco pasos necesarios para la configuración? (Escoja tres opciones).",
-        "a": [
-            "habilitar el routing IP",
-            "ingresando «sin switchport» en el puerto conectado al router",
-            "asignar puertos a las VLAN"
-        ]
-    },
-    {
-        "q": "Un nuevo switch de capa 3 está conectado a un router y se está configurando para el enrutamiento InterVLAN. ¿Cuáles son tres de los cinco pasos necesarios para la configuración? (Escoja tres opciones).",
-        "a": [
-            "creando VLANs",
-            "asignando puertos a VLANs",
-            "creando interfaces SVI"
-        ]
-    },
-    {
         "q": "Un administrador de red esta configurando una WLAN. ¿Por qué cambiaría el administrador las direcciones IPv4 DHCP predeterminadas en un AP?",
         "a": [
             "para reducir la interceptación de datos o el acceso a la red inalámbrica mediante un rango de direcciones conocido"
@@ -156,14 +95,6 @@
         "a": [
             "STP",
             "RSTP"
-        ]
-    },
-    {
-        "q": "Consulte la ilustración. Todos los switches que se muestran son switches Cisco 2960 con la misma prioridad predeterminada y funcionan en el mismo ancho de banda. ¿Cuáles son los tres puertos que serán los puertos designados de STP? (Elija tres).",
-        "a": [
-            "fa0/21",
-            "fa0/13",
-            "fa0/10"
         ]
     },
     {
@@ -204,27 +135,9 @@
         ]
     },
     {
-        "q": "Consulte la ilustración. ¿Qué ruta se configuró como ruta estática en una red específica con la dirección del próximo salto?",
-        "a": [
-            "S 10.17.2.0/24 [1/0] via 10.16.2.2"
-        ]
-    },
-    {
         "q": "¿De qué manera cambia la forma en que un router administra el routing estático si se inhabilita Cisco Express Forwarding?",
         "a": [
             "Las interfaces Ethernet de accesos múltiples requieren rutas estáticas especificadas completamente para evitar incoherencias de routing."
-        ]
-    },
-    {
-        "q": "Consulte la ilustración. El router R1 tiene una relación de vecino OSPF con el router ISP a través de la red 192.168.0.32. El enlace de red 192.168.0.36 debe funcionar como respaldo cuando deja de funcionar el enlace OSPF. Se emitió el comando de ruta estática flotante ip route 0.0.0.0 0.0.0.0 S0/0/1 100 en el R1, y ahora el tráfico usa el enlace de respaldo, aun cuando el enlace OSPF está activo y en funcionamiento. ¿Qué modificaciones se deben realizar al comando de ruta estática a fin de que el tráfico use solo el enlace OSPF cuando este se encuentre activo?",
-        "a": [
-            "Cambiar la distancia administrativa a 120."
-        ]
-    },
-    {
-        "q": "Consulte la ilustración. El router R1 tiene una relación de vecino OSPF con el router ISP a través de la red 192.168.0.32. El enlace de red 192.168.0.36 debe funcionar como respaldo cuando deja de funcionar el enlace OSPF. Se emitió el comando de ruta estática flotante ip route 0.0.0.0 0.0.0.0 S0/0/1 100 en el R1, y ahora el tráfico usa el enlace de respaldo, aun cuando el enlace OSPF está activo y en funcionamiento. ¿Qué modificaciones se deben realizar al comando de ruta estática a fin de que el tráfico use solo el enlace OSPF cuando este se encuentre activo?",
-        "a": [
-            "Cambie la distancia administrativa a 120."
         ]
     },
     {
@@ -252,24 +165,6 @@
         ]
     },
     {
-        "q": "Consulte la ilustración. El R1 se configuró con el comando de ruta estática ip route 209.165.200.224 255.255.255.224 S0/0/0 y, en consecuencia, los usuarios en la red 172.16.0.0/16 no pueden acceder a los recursos de Internet. ¿Cómo se debe modificar esta ruta estática para permitir que el tráfico de usuarios de la LAN llegue a Internet?",
-        "a": [
-            "Cambiar la red y la máscara de destino a 0.0.0.0 0.0.0.0."
-        ]
-    },
-    {
-        "q": "Consulte la ilustración. El router R1 actualmente utiliza una ruta de EIGRP obtenida de la Sucursal2 para acceder a la red 10.10.0.0/16. ¿Qué ruta estática flotante creará una ruta de respaldo a la red 10.10.0.0/16 en caso de que el enlace entre el R1 y la Sucursal2 deje de funcionar?",
-        "a": [
-            "ip route 10.10.0.0 255.255.0.0 209.165.200.225 100"
-        ]
-    },
-    {
-        "q": "¿Qué comando crea una ruta estática en el R2 para llegar a la PC B?",
-        "a": [
-            "R2(config)# ip route 172.16.2.0 255.255.255.0 172.16.3.1"
-        ]
-    },
-    {
         "q": "Consulte la ilustración. ¿Cuáles de las siguientes son tres conclusiones que se pueden extraer a partir del resultado que se muestra? (Elija dos).",
         "a": [
             "El canal de puerto ID es 2.",
@@ -283,12 +178,6 @@
         ]
     },
     {
-        "q": "Consulte la exhibición. ¿Qué dirección MAC de destino se utiliza cuando las tramas se envían de la estación de trabajo al gateway predeterminado?",
-        "a": [
-            "La dirección MAC del router virtual"
-        ]
-    },
-    {
         "q": "¿Cuáles son tres técnicas de mitigación de ataques de VLAN? (Elija tres opciones.)",
         "a": [
             "Habilitar manualmente los enlaces troncales.",
@@ -297,27 +186,9 @@
         ]
     },
     {
-        "q": "Consulte la exhibición. Además de las rutas estáticas que direccionan el tráfico a las redes 10.10.0.0/16 y 10.20.0.0/16, el router HQ también está configurado con el siguiente comando:",
-        "a": [
-            "Los paquetes con una red de destino que no sea 10.10.0.0/16 ni 10.20.0.0/16 ni una red conectada directamente serán reenviados a Internet."
-        ]
-    },
-    {
         "q": "¿Qué método de cifrado inalámbrico es la manera más segura?",
         "a": [
             "WPA2 con AES"
-        ]
-    },
-    {
-        "q": "Consulte la ilustración. Un administrador de red ha conectado dos switches juntos con la tecnología EtherChannel. Si STP se está ejecutando, ¿cuál será el resultado final?",
-        "a": [
-            "El STP bloqueará uno de los enlaces redundantes."
-        ]
-    },
-    {
-        "q": "Consulte la ilustración. ¿Qué ruta estática introduciría un técnico de TI para crear una ruta de respaldo a la red 172.16.1.0 que solo se utiliza si la ruta principal aprendida a través de RIP falla?",
-        "a": [
-            "ip route 172.16.1.0 255.255.255.0 s0/0/0 121"
         ]
     },
     {
@@ -333,27 +204,9 @@
         ]
     },
     {
-        "q": "Consulte la ilustración. ¿Cuáles son los posibles roles de puerto para los puertos A, B, C y D en esta red con el protocolo RSTP habilitado?",
-        "a": [
-            "Alternativo, designado, raíz, raíz"
-        ]
-    },
-    {
         "q": "¿Cuál es una opción de configuración segura para el acceso remoto a un dispositivo de red?",
         "a": [
             "Configurar SSH."
-        ]
-    },
-    {
-        "q": "Consulte la exhibición. Un administrador de red configura el routing entre VLAN en una red. De momento, solo se usa una VLAN, pero pronto se agregarán más. ¿Cuál es el parámetro que falta y que se muestra como signo de interrogación destacado en el gráfico?",
-        "a": [
-            "El que identifica el número de VLAN."
-        ]
-    },
-    {
-        "q": "Consulte la exhibición. ¿Cómo se reenvía una trama desde la PCA hacia la PCC si la tabla de direcciones MAC en el switch SW1 está vacía?",
-        "a": [
-            "SW1 satura todos los puertos en SW1 con la trama, a excepción del puerto a través del cual la trama ingresó al switch."
         ]
     },
     {
@@ -382,23 +235,10 @@
         ]
     },
     {
-        "q": "¿Qué dos configuraciones de router inalámbrico predeterminadas pueden afectar la seguridad de la red? (Elija dos opciones).",
-        "a": [
-            "Se difunde el SSID.",
-            "Se configura una contraseña de administrador ampliamente conocida."
-        ]
-    },
-    {
         "q": "En comparación con las rutas dinámicas, ¿cuáles son las dos ventajas de utilizar rutas estáticas en un router? (Elija dos opciones.)",
         "a": [
             "Mejoran la seguridad de la red.",
             "Utilizan menos recursos del router."
-        ]
-    },
-    {
-        "q": "Consulte la exhibición. ¿Cuál es la métrica para reenviar un paquete de datos con la dirección de destino IPv6 2001:DB8:ACAD:E:240:BFF:FED4:9DD2?",
-        "a": [
-            "2682112"
         ]
     },
     {
@@ -414,23 +254,9 @@
         ]
     },
     {
-        "q": "Consulte la exhibición. Un ingeniero de red está configurando un routing IPv6 en la red. ¿Qué comando emitido en el router HQ configurará una ruta predeterminada a Internet para reenviar paquetes a una red de destino IPv6 que no se enumera en la tabla de routing?",
-        "a": [
-            "ipv6 route ::/0 serial 0/1/1"
-        ]
-    },
-    {
         "q": "Un administrador de red ha encontrado a un usuario que envía una trama 802.1Q de doble etiqueta a un switch. ¿Cuál es la mejor solución para prevenir este tipo de ataque?",
         "a": [
             "Las VLAN para los puertos de acceso de usuario deben ser distintas de las VLAN nativas utilizadas en los puertos troncal."
-        ]
-    },
-    {
-        "q": "Consulte la ilustración. El administrador de red está configurando la función de seguridad del puerto en el switch SWC. El administrador emitió el comando show port-security interface fa 0/2 para verificar la configuración. ¿Qué se puede concluir a partir de la salida que se muestra? (Escoja tres opciones).",
-        "a": [
-            "Las infracciones de seguridad harán que este puerto se cierre inmediatamente.",
-            "Este puerto está activo actualmente.",
-            "El modo de puerto del switch para esta interfaz es el modo de acceso."
         ]
     },
     {
@@ -465,12 +291,6 @@
         ]
     },
     {
-        "q": "Consulte la ilustración. ¿Qué enlace troncal no enviará tráfico después de que el proceso de elección de puente raíz se complete?",
-        "a": [
-            "Enlace troncal2"
-        ]
-    },
-    {
         "q": "Un ingeniero WLAN implementa un WLC y cinco puntos de acceso inalámbricos utilizando el protocolo CAPWAP con la función DTLS para asegurar el plano de control de los dispositivos de red. Durante la prueba de la red inalámbrica, el ingeniero de WLAN nota que el tráfico de datos se está intercambiando entre el WLC y los AP en texto sin formato y no se está cifrando. ¿Cuál es la razón más probable para esto?",
         "a": [
             "Aunque DTLS está habilitado de manera predeterminada para asegurar el canal de control CAPWAP, está deshabilitado de manera predeterminada para el canal de datos."
@@ -487,14 +307,6 @@
         "a": [
             "Transparente",
             "Servidor"
-        ]
-    },
-    {
-        "q": "Consulte la ilustración. ¿Qué hosts recibirán solicitudes de ARP desde el host A, considerando que el puerto Fa0/4 en ambos switches está configurado para llevar tráfico a varias VLAN? (Elija tres opciones.)",
-        "a": [
-            "host D",
-            "host C",
-            "host F"
         ]
     },
     {
@@ -535,12 +347,6 @@
             "Líneas vty",
             "Gateway predeterminado",
             "Dirección IP"
-        ]
-    },
-    {
-        "q": "Consulte la exhibición. Después de intentar introducir la configuración que se muestra en el router RTA, un administrador recibe un error, y los usuarios en la VLAN 20 informan que no pueden llegar a los usuarios en la VLAN 30. ¿Qué está causando el problema?",
-        "a": [
-            "RTA usa la misma subred para la VLAN 20 y la VLAN 30."
         ]
     },
     {
@@ -592,24 +398,6 @@
         "q": "¿Qué acción se lleva a cabo cuando una trama que ingresa a un switch tiene una dirección MAC de destino de unidifusión que aparece en la tabla de direcciones MAC?",
         "a": [
             "El switch reenvía la trama fuera del puerto especificado."
-        ]
-    },
-    {
-        "q": "Consulte la ilustración.¿Qué comando static route se puede ingresar en R1 para reenviar tráfico a la LAN conectada a R2?",
-        "a": [
-            "ruta ipv6 2001:db 8:12:10: :/64 S0/0/1 fe80: :2"
-        ]
-    },
-    {
-        "q": "Consulte la ilustración. Un administrador de red revisa la configuración del switch S1. ¿Qué protocolo se implementó para agrupar varios puertos de físicos en un único enlace lógico?",
-        "a": [
-            "PAgP"
-        ]
-    },
-    {
-        "q": "Consulte la ilustración. ¿Qué afirmación que se muestra en el resultado permite que el router R1 responda a las solicitudes de DHCPv6 sin información de estado?",
-        "a": [
-            "ipv6 nd other-config-flag​"
         ]
     },
     {
@@ -666,24 +454,6 @@
         "q": "¿En qué situación un técnico usaría el comando de switch show interfaces ?",
         "a": [
             "Cuando los paquetes se eliminan de un host en particular conectado directamente."
-        ]
-    },
-    {
-        "q": "Consulte la ilustración. Un administrador de red configura R1 para el enrutamiento entre VLAN entre VLAN 10 y VLAN 20. Sin embargo, los dispositivos de VLAN 10 y VLAN 20 no pueden comunicarse. Basado en la configuración de la exposición, ¿cuál es una posible causa del problema?",
-        "a": [
-            "La interfaz de comando GigabitEthernet 0/0.1 es incorrecta."
-        ]
-    },
-    {
-        "q": "Consulte la ilustración. Considere que se acaba de restaurar la alimentación principal. La PC3 emite una solicitud de DHCP IPv4 de difusión. ¿A qué puerto reenvía esta solicitud SW1?",
-        "a": [
-            "Solo a Fa0/1, Fa0/2 y Fa0/3"
-        ]
-    },
-    {
-        "q": "Consulte la exhibición. Si las direcciones IP del router de gateway predeterminado y del servidor DNS son correctas, ¿cuál es el problema de configuración?",
-        "a": [
-            "No se incluye la dirección IP del router de gateway predeterminado en la lista de direcciones excluidas."
         ]
     },
     {
@@ -773,27 +543,9 @@
         ]
     },
     {
-        "q": "Consulte la ilustración. Un administrador intenta instalar una ruta estática IPv6 en el router R1 para llegar a la red conectada al router R2. Después de introducir el comando de ruta estática, la conectividad a la red sigue fallando. ¿Qué error se cometió en la configuración de la ruta estática?",
-        "a": [
-            "La interfaz es incorrecta."
-        ]
-    },
-    {
         "q": "¿Cuál es el efecto de ingresar el comando de configuration switchport mode access en un switch?",
         "a": [
             "Deshabilita DTP en una interfaz que no sea troncal."
-        ]
-    },
-    {
-        "q": "Consulte la ilustración. Un administrador de red está configurando el router R1 para la asignación de direcciones IPv6. En función de la configuración parcial, ¿qué esquema de asignación de direcciones de unidifusión global IPv6 piensa implementar el administrador?",
-        "a": [
-            "Con información de estado"
-        ]
-    },
-    {
-        "q": "Consulte la ilustración. Un administrador de red configuró los routers R1 y R2 como parte del grupo 1 de HSRP. Después de volver a cargar los routers, un usuario en el Host1 se quejó de la falta de conectividad a Internet. El administrador de redes emitió el comando show standby brief en ambos routers para verificar las operaciones de HSRP. Además, el administrador observó la tabla ARP en el Host1. ¿Qué entrada de la tabla ARP del Host1 se debe observar para obtener conectividad a Internet?",
-        "a": [
-            "La dirección IP Virtual y la dirección MAC virtual para el grupo 1 de HSRP"
         ]
     },
     {
@@ -881,112 +633,100 @@
         ]
     },
     {
-        "q": "Un técnico está configurando un router para una pequeña empresa con varias WLAN y no necesita la complejidad de un protocolo de enrutamiento dinámico. ¿Qué se debe hacer o verificar?",
+        "q": "¿Cuál es el efecto de ingresar el comando de configuración de spanning-tree portfast en un switch?",
         "a": [
             "Habilita portfast en una interfaz de conmutador específica."
         ]
     },
     {
-        "q": "Un técnico está configurando un router para una pequeña empresa con varias WLAN y no necesita la complejidad de un protocolo de enrutamiento dinámico. ¿Qué se debe hacer o verificar?",
-        "a": [
-            "Trunk2"
-        ]
-    },
-    {
-        "q": "Un técnico está configurando un router para una pequeña empresa con varias WLAN y no necesita la complejidad de un protocolo de enrutamiento dinámico. ¿Qué se debe hacer o verificar?",
+        "q": "¿Qué plan de mitigación es mejor para frustrar un ataque DoS que está creando un desbordamiento de la tabla de direcciones MAC?",
         "a": [
             "Habilite la seguridad del puerto."
         ]
     },
     {
-        "q": "Un técnico está configurando un router para una pequeña empresa con varias WLAN y no necesita la complejidad de un protocolo de enrutamiento dinámico. ¿Qué se debe hacer o verificar?",
+        "q": "¿Qué mensaje DHCPv4 enviará un cliente para aceptar una dirección IPv4 ofrecida por un servidor DHCP?",
         "a": [
             "transmite DHCPREQUEST"
         ]
     },
     {
-        "q": "Un técnico está configurando un router para una pequeña empresa con varias WLAN y no necesita la complejidad de un protocolo de enrutamiento dinámico. ¿Qué se debe hacer o verificar?",
+        "q": "¿Qué protocolo agrega seguridad a las conexiones remotas?",
         "a": [
             "SSH"
         ]
     },
     {
-        "q": "Un técnico está configurando un router para una pequeña empresa con varias WLAN y no necesita la complejidad de un protocolo de enrutamiento dinámico. ¿Qué se debe hacer o verificar?",
-        "a": [
-            "El comando encapsulation dot1Q 5 contiene la VLAN incorrecta."
-        ]
-    },
-    {
-        "q": "Un técnico está configurando un router para una pequeña empresa con varias WLAN y no necesita la complejidad de un protocolo de enrutamiento dinámico. ¿Qué se debe hacer o verificar?",
+        "q": "Se agregará un nuevo conmutador a una red existente en una oficina remota. El administrador de la red no quiere que los técnicos de la oficina remota puedan agregar nuevas VLAN al switch, pero el conmutador debe recibir actualizaciones de VLAN desde el dominio VTP. ¿Qué dos pasos se deben realizar para configurar VTP en el nuevo conmutador para cumplir con estas condiciones? (Elija dos opciones.)",
         "a": [
             "Configure el nuevo conmutador como cliente VTP.",
             "Configure el nombre de dominio del VTP existente en el nuevo conmutador."
         ]
     },
     {
-        "q": "Un técnico está configurando un router para una pequeña empresa con varias WLAN y no necesita la complejidad de un protocolo de enrutamiento dinámico. ¿Qué se debe hacer o verificar?",
+        "q": "Un administrador se da cuenta de que se están cayendo grandes cantidades de paquetes en uno de los enrutadores de sucursal. ¿Qué se debe hacer o verificar?",
         "a": [
             "Verifique la tabla de enrutamiento para ver si falta una ruta estática."
         ]
     },
     {
-        "q": "Un técnico está configurando un router para una pequeña empresa con varias WLAN y no necesita la complejidad de un protocolo de enrutamiento dinámico. ¿Qué se debe hacer o verificar?",
+        "q": "¿Cuáles son las dos características del switch que podrían ayudar a aliviar la congestión de la red? (Elija dos opciones.)",
         "a": [
             "cambio interno rápido",
             "búferes de marcos grandes"
         ]
     },
     {
-        "q": "Un técnico está configurando un router para una pequeña empresa con varias WLAN y no necesita la complejidad de un protocolo de enrutamiento dinámico. ¿Qué se debe hacer o verificar?",
+        "q": "¿Cuál es el resultado de conectar dos o más conmutadores juntos?",
         "a": [
             "Se aumenta el tamaño del dominio de transmisión."
         ]
     },
     {
-        "q": "Un técnico está configurando un router para una pequeña empresa con varias WLAN y no necesita la complejidad de un protocolo de enrutamiento dinámico. ¿Qué se debe hacer o verificar?",
+        "q": "Un administrador de red está configurando una WLAN. ¿Por qué el administrador deshabilitaría la función de transmisión para el SSID?",
         "a": [
             "para eliminar a los forasteros que buscan SSID disponibles en el área"
         ]
     },
     {
-        "q": "Un técnico está configurando un router para una pequeña empresa con varias WLAN y no necesita la complejidad de un protocolo de enrutamiento dinámico. ¿Qué se debe hacer o verificar?",
+        "q": "Un administrador de red está configurando una WLAN. ¿Por qué el administrador cambiaría las direcciones DHCP IPv4 predeterminadas en un AP?",
         "a": [
             "para reducir que personas externas intercepten datos o accedan a la red inalámbrica mediante el uso de un rango de direcciones conocido"
         ]
     },
     {
-        "q": "Un técnico está configurando un router para una pequeña empresa con varias WLAN y no necesita la complejidad de un protocolo de enrutamiento dinámico. ¿Qué se debe hacer o verificar?",
+        "q": "¿Qué dirección y longitud de prefijo se utiliza al configurar una ruta estática predeterminada IPv6?",
         "a": [
             "::/0"
         ]
     },
     {
-        "q": "Un técnico está configurando un router para una pequeña empresa con varias WLAN y no necesita la complejidad de un protocolo de enrutamiento dinámico. ¿Qué se debe hacer o verificar?",
+        "q": "¿Cuáles son dos características de Cisco Express Forwarding (CEF)? (Elija dos opciones.)",
         "a": [
             "Este es el mecanismo de reenvío más rápido en los enrutadores y conmutadores multicapa de Cisco.",
             "Los paquetes se reenvían según la información de la FIB y una tabla de adyacencia."
         ]
     },
     {
-        "q": "Un técnico está configurando un router para una pequeña empresa con varias WLAN y no necesita la complejidad de un protocolo de enrutamiento dinámico. ¿Qué se debe hacer o verificar?",
+        "q": "¿Qué término describe la función de un switch Cisco en el control de acceso basado en puertos 802.1X?",
         "a": [
             "autenticador"
         ]
     },
     {
-        "q": "Un técnico está configurando un router para una pequeña empresa con varias WLAN y no necesita la complejidad de un protocolo de enrutamiento dinámico. ¿Qué se debe hacer o verificar?",
+        "q": "¿Qué solución de Cisco ayuda a prevenir la suplantación de ARP y los ataques de envenenamiento de ARP?",
         "a": [
             "Inspección dinámica de ARP"
         ]
     },
     {
-        "q": "Un técnico está configurando un router para una pequeña empresa con varias WLAN y no necesita la complejidad de un protocolo de enrutamiento dinámico. ¿Qué se debe hacer o verificar?",
+        "q": "¿Cuál es una ventaja de PVST +?",
         "a": [
             "PVST + optimiza el rendimiento en la red mediante el uso compartido de la carga."
         ]
     },
     {
-        "q": "Un técnico está configurando un router para una pequeña empresa con varias WLAN y no necesita la complejidad de un protocolo de enrutamiento dinámico. ¿Qué se debe hacer o verificar?",
+        "q": "Una pequeña empresa editorial tiene un diseño de red tal que cuando se envía una transmisión en la LAN, 200 dispositivos reciben la transmisión transmitida. ¿Cómo puede el administrador de red reducir la cantidad de dispositivos que reciben tráfico de transmisión?",
         "a": [
             "Segmente la LAN en LAN más pequeñas y enrute entre ellas. *"
         ]
@@ -998,39 +738,39 @@
         ]
     },
     {
-        "q": "¿Qué define una ruta de host en un router Cisco?",
+        "q": "¿Qué más se requiere al configurar una ruta estática IPv6 usando una dirección local de enlace de siguiente salto?",
         "a": [
             "número y tipo de interfaz"
         ]
     },
     {
-        "q": "¿Qué define una ruta de host en un router Cisco?",
+        "q": "Un técnico está configurando una red inalámbrica para una pequeña empresa utilizando un enrutador inalámbrico SOHO. ¿Qué dos métodos de autenticación se utilizan si el enrutador está configurado con WPA2? (Elija dos opciones.)",
         "a": [
             "personal",
             "empresa"
         ]
     },
     {
-        "q": "¿Qué define una ruta de host en un router Cisco?",
+        "q": "¿Qué técnica de mitigación evitaría que los servidores no autorizados proporcionen parámetros de configuración de IPv6 falsos a los clientes?",
         "a": [
             "habilitando DHCPv6 Guard"
         ]
     },
     {
-        "q": "¿Qué define una ruta de host en un router Cisco?",
+        "q": "Una PC ha enviado un mensaje RS a un enrutador IPv6 conectado a la misma red. ¿Qué dos datos enviará el enrutador al cliente? (Elija dos opciones.)",
         "a": [
             "longitud del prefijo",
             "prefijo"
         ]
     },
     {
-        "q": "¿Qué define una ruta de host en un router Cisco?",
+        "q": "Mientras asisten a una conferencia, los participantes utilizan computadoras portátiles para conectarse a la red. Cuando un orador invitado intenta conectarse a la red, la computadora portátil no muestra ninguna red inalámbrica disponible. ¿El punto de acceso debe estar funcionando en qué modo?",
         "a": [
             "activo"
         ]
     },
     {
-        "q": "¿Qué define una ruta de host en un router Cisco?",
+        "q": "¿Qué tres componentes se combinan para formar un ID de puente?",
         "a": [
             "ID de sistema extendido",
             "prioridad de puente",
@@ -1041,42 +781,6 @@
         "q": "¿Cuál es el efecto de ingresar el comando de configuración de spanning-tree portfast en un switch?",
         "a": [
             "Habilita portfast en una interfaz de conmutador específica."
-        ]
-    },
-    {
-        "q": "¿Cuál es el modo de violación de puerto predeterminado cuando se habilita la seguridad de puerto en un switch Cisco?",
-        "a": [
-            "shutdown"
-        ]
-    },
-    {
-        "q": "Un administrador de red está configurando la seguridad de puerto en un switch Cisco. ¿Qué comando se usa para configurar el número máximo de direcciones MAC que se pueden aprender en un puerto?",
-        "a": [
-            "switchport port-security maximum"
-        ]
-    },
-    {
-        "q": "¿Qué característica de seguridad mitiga los ataques de suplantación de identidad (spoofing) ARP?",
-        "a": [
-            "Dynamic ARP Inspection (DAI)"
-        ]
-    },
-    {
-        "q": "¿Qué comando se utiliza para habilitar globalmente DHCP Snooping en un switch Cisco?",
-        "a": [
-            "ip dhcp snooping"
-        ]
-    },
-    {
-        "q": "¿Qué comando se usa para ver la tabla de enlace de DHCP snooping en un switch Cisco?",
-        "a": [
-            "show ip dhcp snooping binding"
-        ]
-    },
-    {
-        "q": "Imagina que has abierto la aplicación Teachable Machine y la entrenas para clasificar dos tipos de objetos, un lápiz y un borrador. Luego lo pruebas con tu cara y notas que clasifica tu cara como un borrador (60% borrador, 40% lápiz). ¿Cuáles son las posibles razones para esto? Seleccionar todas las que correspondan (Elija dos.)",
-        "a": [
-            "Había algo de ruido de fondo (un perro ladrando) cuando estabas tomando fotos del borrador, y también cuando estabas probando el modelo con tu cara."
         ]
     }
 ]
