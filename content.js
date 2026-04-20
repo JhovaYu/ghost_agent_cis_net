@@ -1,82 +1,101 @@
-/**
- * GHOST AGENT - CONTENT SCRIPT V7 (Shield Breaker)
- */
+// Estado
+let overlayEl = null;
+let inputEl = null;
+let resultsEl = null;
+let isOpen = false;
 
-if (typeof window.ghostAgentInjected === 'undefined') {
-  window.ghostAgentInjected = true;
+// Escuchar el comando del background
+chrome.runtime.onMessage.addListener((msg) => {
+  if (msg.action === 'toggle_overlay') toggleOverlay();
+});
 
-  // 1. ROMPER PROTECCIÓN DE CISCO (Hacer todo seleccionable)
-  const style = document.createElement('style');
-  style.innerHTML = `
-        * {
-            -webkit-user-select: text !important;
-            -moz-user-select: text !important;
-            -ms-user-select: text !important;
-            user-select: text !important;
-        }
-    `;
-  document.head.appendChild(style);
-  console.log("GHOST INJECTOR: 🛡️ Escudo de selección roto.");
+function toggleOverlay() {
+  if (isOpen) { closeOverlay(); return; }
+  openOverlay();
+}
 
-  function cleanNodeText(node) {
-    if (!node) return "";
-    let clone = node.cloneNode(true);
-    let spam = clone.querySelectorAll('.screenReader-position-text, .sr-only, [aria-hidden="true"]');
-    spam.forEach(el => el.remove());
-    return clone.innerText.replace(/\s+/g, ' ').trim();
+function openOverlay() {
+  if (overlayEl) { overlayEl.style.display = 'block'; inputEl.value = ''; resultsEl.innerHTML = ''; inputEl.focus(); isOpen = true; return; }
+  
+  // Crear overlay
+  overlayEl = document.createElement('div');
+  overlayEl.id = 'ghost-overlay';
+  
+  inputEl = document.createElement('input');
+  inputEl.type = 'text';
+  inputEl.id = 'ghost-input';
+  inputEl.placeholder = 'Escribe la pregunta...';
+  inputEl.setAttribute('autocomplete', 'off');
+  inputEl.setAttribute('spellcheck', 'false');
+  
+  resultsEl = document.createElement('div');
+  resultsEl.id = 'ghost-results';
+  
+  overlayEl.appendChild(inputEl);
+  overlayEl.appendChild(resultsEl);
+  document.body.appendChild(overlayEl);
+  
+  inputEl.addEventListener('input', onInput);
+  inputEl.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeOverlay();
+    e.stopPropagation(); // Evitar que Cisco capture las teclas
+  });
+  
+  // Click fuera cierra
+  document.addEventListener('click', onClickOutside);
+  
+  inputEl.focus();
+  isOpen = true;
+}
+
+function closeOverlay() {
+  if (overlayEl) overlayEl.style.display = 'none';
+  document.removeEventListener('click', onClickOutside);
+  isOpen = false;
+}
+
+function onClickOutside(e) {
+  if (overlayEl && !overlayEl.contains(e.target)) closeOverlay();
+}
+
+function onInput() {
+  const query = inputEl.value.trim();
+  if (query.length < 3) { resultsEl.innerHTML = ''; return; }
+  
+  chrome.runtime.sendMessage({ action: 'search_query', query }, (response) => {
+    if (chrome.runtime.lastError || !response) return;
+    renderResults(response.results);
+  });
+}
+
+function renderResults(results) {
+  resultsEl.innerHTML = '';
+  if (!results || results.length === 0) {
+    const noResult = document.createElement('p');
+    noResult.className = 'ghost-no-result';
+    noResult.textContent = 'Sin resultados';
+    resultsEl.appendChild(noResult);
+    return;
   }
-
-  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.action !== "trigger_extraction") return;
-
-    console.log("GHOST INJECTOR: 📡 Escaneando...");
-
-    // Intentar Sniper Mode primero
-    let questionText = window.getSelection().toString().trim();
-
-    // Si no hay selección, intentamos capturar por fuerza bruta el texto central
-    if (!questionText) {
-      // Buscamos el div que suele contener la pregunta en el visualizador de autoría
-      let mainContent = document.querySelector('.main-content, #main-wrapper, .assessment-container, .mcq__body-inner');
-      if (mainContent) {
-        // Sacamos el primer párrafo o h3 que no sea basura
-        let p = mainContent.querySelector('p, h3, h2');
-        if (p) questionText = p.innerText.trim();
-      }
-    }
-
-    if (!questionText || questionText.length < 5) {
-      console.log("GHOST INJECTOR: ❌ No se pudo extraer texto. Intenta seleccionar la pregunta ahora que es posible.");
-      return;
-    }
-
-    console.log("GHOST INJECTOR: 🎯 Procesando:", questionText.substring(0, 50));
-
-    let optionNodes = Array.from(document.querySelectorAll('label, .mcq__item-label, li, [role="listitem"]'));
-
-    chrome.runtime.sendMessage({
-      action: "search_question",
-      question: questionText
-    }, (response) => {
-      if (response && response.answers && response.answers.length > 0) {
-        console.log("GHOST INJECTOR: 🔥 Match!");
-
-        optionNodes.forEach(node => {
-          let cleanText = cleanNodeText(node).toLowerCase();
-          let isCorrect = response.answers.some(ans => {
-            let aLower = ans.toLowerCase().trim();
-            return cleanText.includes(aLower) || aLower.includes(cleanText);
-          });
-
-          if (isCorrect) {
-            node.style.setProperty("background-color", "rgba(46, 204, 113, 0.3)", "important");
-            node.style.setProperty("border", "2px solid #2ecc71", "important");
-          }
-        });
-      } else {
-        console.log("GHOST INJECTOR: 🧠 Sin match en DB.");
-      }
+  
+  results.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'ghost-result-card';
+    
+    const q = document.createElement('p');
+    q.className = 'ghost-q';
+    q.textContent = item.q;
+    
+    const answers = document.createElement('ul');
+    answers.className = 'ghost-answers';
+    item.a.forEach(ans => {
+      const li = document.createElement('li');
+      li.textContent = ans;
+      answers.appendChild(li);
     });
-    return true;
+    
+    card.appendChild(q);
+    card.appendChild(answers);
+    resultsEl.appendChild(card);
   });
 }

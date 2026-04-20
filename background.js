@@ -64,66 +64,40 @@ function getSimilarity(s1, s2) {
   return (longerLength - levenshteinDistance(longer, shorter)) / parseFloat(longerLength);
 }
 
-// Listener para atajos de teclado
+// Listener del comando toggle
 chrome.commands.onCommand.addListener((command) => {
-  console.log("GHOST BRAIN: Atajo activado ->", command);
-  if (command === "search_database") {
-    // Mandar mensaje iterativo a TODOS los iframes de la tab activa
-    chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-      if (tabs[0]) {
-        chrome.webNavigation.getAllFrames({tabId: tabs[0].id}, (frames) => {
-          if (frames && frames.length > 0) {
-            frames.forEach(frame => {
-              console.log("GHOST BRAIN: Bombardeando frame ID ->", frame.frameId, "URL:", frame.url);
-              chrome.scripting.executeScript({
-                  target: { tabId: tabs[0].id, frameIds: [frame.frameId] },
-                  files: ["content.js"]
-              }).then(() => {
-                  return chrome.scripting.insertCSS({
-                      target: { tabId: tabs[0].id, frameIds: [frame.frameId] },
-                      files: ["content.css"]
-                  });
-              }).then(() => {
-                  chrome.tabs.sendMessage(tabs[0].id, { action: "trigger_extraction" }, { frameId: frame.frameId })
-                      .catch(() => {});
-              }).catch(err => console.error("Error inyectando en frame:", err));
-            });
-          } else {
-            // Fallback
-            chrome.tabs.sendMessage(tabs[0].id, {action: "trigger_extraction"}).catch(() => {});
-          }
-        });
+  if (command === 'toggle_overlay') {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, { action: 'toggle_overlay' }).catch(() => {});
       }
     });
   }
 });
 
-// Listener para recibir la pregunta parseada
+// Nuevo listener: búsqueda por query de texto libre
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.action === "search_question") {
-        if (!request.question) {
-            console.log("Ghost Agent: Petición vacía ignorada.");
-            return sendResponse({ action: "highlight_answers", answers: [] });
-        }
-        
-        const questionText = request.question;
-        let bestMatch = null;
-        let highestSim = 0;
-
-        for (const item of db) {
-            const sim = getSimilarity(item.q, questionText);
-            if (sim > highestSim) {
-                highestSim = sim;
-                bestMatch = item;
-            }
-        }
-
-        if (bestMatch && highestSim >= 0.85) {
-            console.log("Ghost Agent: Match Encontrado!", (highestSim * 100).toFixed(2) + "%");
-            sendResponse({ action: "highlight_answers", answers: bestMatch.a });
-        } else {
-            console.log("Ghost Agent: No hubo match confiable. Máxima similitud:", (highestSim * 100).toFixed(2) + "%");
-            sendResponse({ action: "highlight_answers", answers: [] });
-        }
+  if (request.action === 'search_query') {
+    const query = normalizeText(request.query);
+    if (!query || query.length < 3) return sendResponse({ results: [] });
+    
+    // Fase 1: búsqueda por prefijo/includes (rápida, sin Levenshtein)
+    let results = db.filter(item => normalizeText(item.q).includes(query));
+    
+    // Fase 2: si no hay resultados con includes, usar Levenshtein top-5
+    if (results.length === 0) {
+      const scored = db.map(item => ({
+        item,
+        sim: getSimilarity(item.q, request.query)
+      })).sort((a, b) => b.sim - a.sim).slice(0, 5);
+      
+      results = scored.filter(s => s.sim >= 0.4).map(s => s.item);
+    } else {
+      // Limitar includes a top 8 para no saturar el overlay
+      results = results.slice(0, 8);
     }
+    
+    sendResponse({ results });
+    return true; // canal asíncrono abierto
+  }
 });

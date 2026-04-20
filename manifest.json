@@ -26,12 +26,12 @@
     }
   ],
   "commands": {
-    "search_database": {
+    "toggle_overlay": {
       "suggested_key": {
-        "default": "Ctrl+Q",
-        "mac": "MacCtrl+Q"
+        "default": "Ctrl+I",
+        "mac": "MacCtrl+I"
       },
-      "description": "Busca la pregunta en el JSON"
+      "description": "Abrir/cerrar buscador Ghost Agent"
     }
   }
 }
