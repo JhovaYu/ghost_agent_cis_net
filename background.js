@@ -66,6 +66,7 @@ function getSimilarity(s1, s2) {
 
 // Listener para atajos de teclado
 chrome.commands.onCommand.addListener((command) => {
+  console.log("GHOST BRAIN: Atajo activado ->", command);
   if (command === "search_database") {
     // Mandar mensaje iterativo a TODOS los iframes de la tab activa
     chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
@@ -73,7 +74,19 @@ chrome.commands.onCommand.addListener((command) => {
         chrome.webNavigation.getAllFrames({tabId: tabs[0].id}, (frames) => {
           if (frames && frames.length > 0) {
             frames.forEach(frame => {
-              chrome.tabs.sendMessage(tabs[0].id, {action: "trigger_extraction"}, {frameId: frame.frameId}).catch(() => {});
+              console.log("GHOST BRAIN: Bombardeando frame ID ->", frame.frameId, "URL:", frame.url);
+              chrome.scripting.executeScript({
+                  target: { tabId: tabs[0].id, frameIds: [frame.frameId] },
+                  files: ["content.js"]
+              }).then(() => {
+                  return chrome.scripting.insertCSS({
+                      target: { tabId: tabs[0].id, frameIds: [frame.frameId] },
+                      files: ["content.css"]
+                  });
+              }).then(() => {
+                  chrome.tabs.sendMessage(tabs[0].id, { action: "trigger_extraction" }, { frameId: frame.frameId })
+                      .catch(() => {});
+              }).catch(err => console.error("Error inyectando en frame:", err));
             });
           } else {
             // Fallback
