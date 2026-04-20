@@ -6,7 +6,8 @@
   "permissions": [
     "activeTab",
     "scripting",
-    "webNavigation"
+    "webNavigation",
+    "clipboardRead"
   ],
   "background": {
     "service_worker": "background.js"
@@ -32,6 +33,10 @@
         "mac": "MacCtrl+I"
       },
       "description": "Abrir/cerrar buscador Ghost Agent"
+    },
+    "toggle_config": {
+      "suggested_key": { "default": "Ctrl+Y", "mac": "MacCtrl+Y" },
+      "description": "Abrir panel de configuración visual"
     }
   }
 }

@@ -9,10 +9,16 @@ fetch(chrome.runtime.getURL('database.json'))
   })
   .catch(err => console.error("Error cargando DB", err));
 
-// Normalizar texto
+// Normalizar texto — ignora acentos, signos de puntuación y espacios extra
 function normalizeText(text) {
-  if (!text) return "";
-  return text.toLowerCase().replace(/\s+/g, ' ').trim();
+  if (!text) return '';
+  return text
+    .toLowerCase()
+    .normalize('NFD')                        // descompone á → a + ́
+    .replace(/[\u0300-\u036f]/g, '')         // elimina los diacríticos (acentos)
+    .replace(/[¿?¡!.,;:\-_"'()[\]{}]/g, '') // elimina signos de puntuación
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 // Algoritmo de distancia de Levenshtein
@@ -73,6 +79,13 @@ chrome.commands.onCommand.addListener((command) => {
       }
     });
   }
+  if (command === 'toggle_config') {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs[0]) {
+        chrome.tabs.sendMessage(tabs[0].id, { action: 'toggle_config' }).catch(() => {});
+      }
+    });
+  }
 });
 
 // Nuevo listener: búsqueda por query de texto libre
@@ -80,24 +93,32 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'search_query') {
     const query = normalizeText(request.query);
     if (!query || query.length < 3) return sendResponse({ results: [] });
-    
-    // Fase 1: búsqueda por prefijo/includes (rápida, sin Levenshtein)
-    let results = db.filter(item => normalizeText(item.q).includes(query));
-    
-    // Fase 2: si no hay resultados con includes, usar Levenshtein top-5
-    if (results.length === 0) {
-      const scored = db.map(item => ({
-        item,
-        sim: getSimilarity(item.q, request.query)
-      })).sort((a, b) => b.sim - a.sim).slice(0, 5);
-      
-      results = scored.filter(s => s.sim >= 0.4).map(s => s.item);
-    } else {
-      // Limitar includes a top 8 para no saturar el overlay
-      results = results.slice(0, 8);
-    }
-    
+
+    // Score compuesto: premia que el query esté en q, pero pesa
+    // la similitud global para evitar falsos positivos por substring corto
+    const scored = db.map(item => {
+      const normQ = normalizeText(item.q);
+      const containsBonus = normQ.includes(query) ? 0.3 : 0;
+      const similarity = getSimilarity(item.q, request.query);
+      // La similitud sola puede fallar en queries cortos; el bonus
+      // de contains eleva entradas donde el query aparece en q,
+      // pero la similitud global evita que entradas irrelevantes
+      // suban solo por tener una palabra en común
+      const score = similarity + containsBonus;
+      return { item, score, similarity };
+    });
+
+    // Ordenar por score descendente
+    scored.sort((a, b) => b.score - a.score);
+
+    // Umbral: solo resultados con similitud real >= 0.25 Y score >= 0.5
+    // Esto filtra entradas que solo matchean por substring corto accidental
+    const results = scored
+      .filter(s => s.similarity >= 0.25 && s.score >= 0.5)
+      .slice(0, 5) // máximo 5 resultados
+      .map(s => s.item);
+
     sendResponse({ results });
-    return true; // canal asíncrono abierto
+    return true;
   }
 });

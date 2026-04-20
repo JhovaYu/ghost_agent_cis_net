@@ -67,3 +67,54 @@
   color: rgba(255,255,255,0.35);
   margin: 8px 0 0 0;
 }
+
+#ghost-config {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 2147483647;
+  width: 260px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  padding: 12px 0 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.ghost-config-title {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 12px 0;
+}
+
+.ghost-config-label {
+  display: block;
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  margin: 10px 0 4px 0;
+}
+
+.ghost-config-val {
+  font-size: 10px;
+  color: rgba(255,255,255,0.3);
+  margin-left: 6px;
+}
+
+#ghost-config input[type="range"] {
+  width: 100%;
+  accent-color: #7fffb2;
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+#ghost-config input[type="color"] {
+  width: 36px;
+  height: 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: transparent;
+  padding: 0;
+}
