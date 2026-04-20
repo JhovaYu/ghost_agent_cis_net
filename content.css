@@ -1,0 +1,6 @@
+/* Ghost Agent - Sutilmente resalta la respuesta en el DOM */
+.ghost-highlight {
+  outline: 1px solid rgba(46, 204, 113, 0.5) !important;
+  background-color: rgba(46, 204, 113, 0.1) !important;
+  border-radius: 4px;
+}

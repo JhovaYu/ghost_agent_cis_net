@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "Ghost Agent",
+  "version": "1.0.0",
+  "description": "Ghost Agent for Cisco (Offline)",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ]
+    }
+  ],
+  "commands": {
+    "search_database": {
+      "suggested_key": {
+        "default": "Ctrl+Q",
+        "mac": "MacCtrl+Q"
+      },
+      "description": "Busca la pregunta en el JSON"
+    }
+  }
+}

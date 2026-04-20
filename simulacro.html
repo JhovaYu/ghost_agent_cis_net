@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cisco NetAcad - Mock Exam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f5f7;
+            color: #333;
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .exam-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Clases reales de Cisco NetAcad */
+        .component__body-inner {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+        }
+
+        .mcq__item-label {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .mcq__item-label:hover {
+            background-color: #f9fafb;
+        }
+
+        .screenReader-position-text {
+            /* Cisco oculta esto visualmente a veces, pero está en el DOM */
+            opacity: 0.3;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+
+        /* Simulación de Radio Button */
+        .radio-mock {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #6b7280;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="exam-container">
+        <h2>Examen Final de SRWE - Pregunta 1</h2>
+        <hr style="margin-bottom: 20px; border: 0; border-top: 1px solid #eee;">
+
+        <div tabindex="0" class="component__body mcq__body">
+            <div class="component__body-inner mcq__body-inner">
+                <p>Los usuarios se quejan de un acceso esporádico a Internet cada tarde. ¿Qué se debe hacer o verificar?
+                </p>
+            </div>
+        </div>
+
+        <label role="listitem" class="mcq__item-label">
+            <div class="radio-mock"></div>
+            <div class="mcq__item-text">
+                <div class="mcq__item-text-inner">
+                    Compruebe que no hay una ruta predeterminada en ninguna de las tablas de enrutamiento del router
+                    perimetral.
+                    <span class="screenReader-position-text"> 1 of 4</span>
+                </div>
+            </div>
+        </label>
+
+        <label role="listitem" class="mcq__item-label">
+            <div class="radio-mock"></div>
+            <div class="mcq__item-text">
+                <div class="mcq__item-text-inner">
+                    Cree una ruta estática flotante a esa red.
+                    <span class="screenReader-position-text"> 2 of 4</span>
+                </div>
+            </div>
+        </label>
+
+        <label role="listitem" class="mcq__item-label">
+            <div class="radio-mock"></div>
+            <div class="mcq__item-text">
+                <div class="mcq__item-text-inner">
+                    Cree rutas estáticas a todas las redes internas y una ruta predeterminada a Internet.
+                    <span class="screenReader-position-text"> 3 of 4</span>
+                </div>
+            </div>
+        </label>
+
+        <label role="listitem" class="mcq__item-label">
+            <div class="radio-mock"></div>
+            <div class="mcq__item-text">
+                <div class="mcq__item-text-inner">
+                    Compruebe las estadísticas de la ruta predeterminada para la sobresaturación.
+                    <span class="screenReader-position-text"> 4 of 4</span>
+                </div>
+            </div>
+        </label>
+
+    </div>
+
+</body>
+
+</html>
